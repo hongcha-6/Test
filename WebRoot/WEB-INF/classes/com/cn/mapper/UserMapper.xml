@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace表示命名空间 -->
+<mapper namespace="com.cn.mapper.UserMapper">
+	<resultMap id="BaseResultMap" type="com.cn.entity.User">
+		<id property="id" column="t_id" />
+		<result property="name" column="t_name" />
+		<result property="age" column="t_age" />
+	</resultMap>
+	
+
+	<!-- <select id="selectAllFun" resultType="user"> -->
+	<select id="selectAllFun" resultMap="BaseResultMap">
+		select * from t_user
+	</select>
+	
+	<select id="selectByIdFun" parameterType="int" resultMap="BaseResultMap">
+		select * from t_user where t_id=#{id}
+	</select>
+	
+	<insert id="insertFun" parameterType="user" keyProperty="id" useGeneratedKeys="true">
+		insert into t_user values(#{name},#{age})
+	</insert>
+	
+	<update id="updateFun" parameterType="user">
+		update t_user set t_name=#{name},t_age=#{age} where t_id=#{id}
+	</update>
+	
+	<delete id="deleteFun" parameterType="int">
+		delete from t_user where t_id=#{id}
+	</delete>
+	
+	<select id="SelectByNameFun" parameterType="String" resultType="user">
+		select * from t_user where t_name like '%${value}%'
+	</select>
+</mapper>
